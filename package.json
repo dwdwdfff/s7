@@ -1,0 +1,28 @@
+{
+  "name": "whatsapp-gemini-bot",
+  "version": "1.0.0",
+  "description": "WhatsApp Bot with Gemini AI Integration",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.6.0",
+    "@google/generative-ai": "^0.2.1",
+    "@anthropic-ai/sdk": "^0.24.3",
+    "express": "^4.18.2",
+    "socket.io": "^4.7.4",
+    "qrcode": "^1.5.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "fs-extra": "^11.2.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": ["whatsapp", "bot", "gemini", "ai", "baileys"],
+  "author": "OpenHands",
+  "license": "MIT"
+}

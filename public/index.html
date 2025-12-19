@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام العقارات الذكي - HASSAN REALESTATE</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-building"></i>
+                    <h1>نظام العقارات الذكي</h1>
+                    <span class="company-name">HASSAN REALESTATE</span>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot" id="connectionStatus"></span>
+                    <span id="statusText">غير متصل</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Navigation Tabs -->
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="connection">
+                    <i class="fas fa-qrcode"></i>
+                    الاتصال
+                </button>
+                <button class="tab-btn" data-tab="business">
+                    <i class="fas fa-store"></i>
+                    البزنس
+                </button>
+                <button class="tab-btn" data-tab="properties">
+                    <i class="fas fa-home"></i>
+                    العقارات
+                </button>
+                <button class="tab-btn" data-tab="appointments">
+                    <i class="fas fa-calendar-alt"></i>
+                    المواعيد
+                </button>
+                <button class="tab-btn" data-tab="settings">
+                    <i class="fas fa-cog"></i>
+                    الإعدادات
+                </button>
+                <button class="tab-btn" data-tab="reports">
+                    <i class="fas fa-download"></i>
+                    التقارير
+                </button>
+                <button class="tab-btn" data-tab="logs">
+                    <i class="fas fa-list"></i>
+                    السجلات
+                </button>
+            </nav>
+
+            <!-- Connection Tab -->
+            <div class="tab-content active" id="connection">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-qrcode"></i> ربط واتساب</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="qr-section">
+                            <!-- Phone Number Input Section -->
+                            <div class="phone-input-section">
+                                <div class="form-group">
+                                    <label for="phoneNumber">رقم الهاتف (اختياري):</label>
+                                    <div class="input-group">
+                                        <input type="tel" id="phoneNumberInput" class="form-control" placeholder="مثال: +966501234567 أو 0501234567" dir="ltr">
+                                        <button type="button" class="btn btn-outline" id="clearPhone">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    <small class="help-text">
+                                        يمكنك إدخال رقم الهاتف لإنشاء رمز QR مخصص، أو تركه فارغاً للاتصال العادي
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="qr-container" id="qrContainer">
+                                <div class="qr-placeholder">
+                                    <i class="fas fa-qrcode"></i>
+                                    <p>انقر على "إنشاء رمز QR" لبدء الاتصال</p>
+                                </div>
+                            </div>
+                            <div class="qr-actions">
+                                <button class="btn btn-primary" id="generateQR">
+                                    <i class="fas fa-sync-alt"></i>
+                                    إنشاء رمز QR
+                                </button>
+                                <button class="btn btn-danger" id="disconnect" style="display: none;">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    قطع الاتصال
+                                </button>
+                            </div>
+                        </div>
+                        <div class="connection-info">
+                            <div class="info-item">
+                                <span class="label">حالة الاتصال:</span>
+                                <span class="value" id="connectionInfo">غير متصل</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">رقم الهاتف:</span>
+                                <span class="value" id="phoneNumber">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Business Tab -->
+            <div class="tab-content" id="business">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-building"></i> معلومات الشركة العقارية</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="businessForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="businessName">اسم الشركة:</label>
+                                    <input type="text" id="businessName" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="businessPhone">رقم الهاتف:</label>
+                                    <input type="tel" id="businessPhone" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="businessDescription">وصف الشركة:</label>
+                                <textarea id="businessDescription" class="form-control" rows="4" placeholder="وصف تخصص الشركة في العقارات والاستثمار العقاري"></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="businessEmail">البريد الإلكتروني:</label>
+                                    <input type="email" id="businessEmail" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="businessAddress">العنوان:</label>
+                                    <input type="text" id="businessAddress" class="form-control" placeholder="مصر - القاهرة">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="adminNumbers">أرقام الإدارة (للإشعارات):</label>
+                                <textarea id="adminNumbers" class="form-control" rows="2" placeholder="01234567890&#10;01987654321"></textarea>
+                                <small class="form-text">أدخل رقم في كل سطر - ستصل إشعارات المواعيد والاستفسارات لهذه الأرقام</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="paymentMethods">طرق الدفع المتاحة:</label>
+                                <div class="checkbox-group" id="paymentMethods">
+                                    <label><input type="checkbox" value="نقداً"> نقداً</label>
+                                    <label><input type="checkbox" value="تحويل بنكي"> تحويل بنكي</label>
+                                    <label><input type="checkbox" value="شيكات"> شيكات</label>
+                                    <label><input type="checkbox" value="تقسيط على فترات"> تقسيط على فترات</label>
+                                    <label><input type="checkbox" value="دفع مقدم + أقساط"> دفع مقدم + أقساط</label>
+                                    <label><input type="checkbox" value="تمويل عقاري"> تمويل عقاري</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="propertyTypes">أنواع العقارات المتاحة:</label>
+                                <div class="checkbox-group" id="propertyTypes">
+                                    <label><input type="checkbox" value="شقق سكنية"> شقق سكنية</label>
+                                    <label><input type="checkbox" value="فيلات"> فيلات</label>
+                                    <label><input type="checkbox" value="محلات تجارية"> محلات تجارية</label>
+                                    <label><input type="checkbox" value="مكاتب إدارية"> مكاتب إدارية</label>
+                                    <label><input type="checkbox" value="أراضي"> أراضي</label>
+                                    <label><input type="checkbox" value="مشاريع استثمارية"> مشاريع استثمارية</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="services">الخدمات المقدمة:</label>
+                                <div class="checkbox-group" id="services">
+                                    <label><input type="checkbox" value="استشارات عقارية"> استشارات عقارية</label>
+                                    <label><input type="checkbox" value="تقييم العقارات"> تقييم العقارات</label>
+                                    <label><input type="checkbox" value="إدارة الممتلكات"> إدارة الممتلكات</label>
+                                    <label><input type="checkbox" value="التسويق العقاري"> التسويق العقاري</label>
+                                    <label><input type="checkbox" value="المتابعة القانونية"> المتابعة القانونية</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>ساعات العمل:</label>
+                                <div class="working-hours">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="sundayHours">الأحد:</label>
+                                            <input type="text" id="sundayHours" class="form-control" placeholder="9:00 AM - 6:00 PM">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="mondayHours">الاثنين:</label>
+                                            <input type="text" id="mondayHours" class="form-control" placeholder="9:00 AM - 6:00 PM">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="tuesdayHours">الثلاثاء:</label>
+                                            <input type="text" id="tuesdayHours" class="form-control" placeholder="9:00 AM - 6:00 PM">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="wednesdayHours">الأربعاء:</label>
+                                            <input type="text" id="wednesdayHours" class="form-control" placeholder="9:00 AM - 6:00 PM">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="thursdayHours">الخميس:</label>
+                                            <input type="text" id="thursdayHours" class="form-control" placeholder="9:00 AM - 6:00 PM">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="fridayHours">الجمعة:</label>
+                                            <input type="text" id="fridayHours" class="form-control" placeholder="مغلق">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="saturdayHours">السبت:</label>
+                                            <input type="text" id="saturdayHours" class="form-control" placeholder="9:00 AM - 3:00 PM">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i>
+                                    حفظ معلومات الشركة
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Properties Tab -->
+            <div class="tab-content" id="properties">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-home"></i> إدارة العقارات</h2>
+                        <button class="btn btn-primary" id="addPropertyBtn">
+                            <i class="fas fa-plus"></i>
+                            إضافة عقار جديد
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <!-- Properties Search -->
+                        <div class="search-section">
+                            <div class="search-bar">
+                                <input type="text" id="propertySearch" class="form-control" placeholder="البحث في العقارات...">
+                                <button class="btn btn-outline" id="searchPropertiesBtn">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <div class="filter-options">
+                                <select id="typeFilter" class="form-control">
+                                    <option value="">جميع الأنواع</option>
+                                    <option value="شقة سكنية">شقة سكنية</option>
+                                    <option value="فيلا">فيلا</option>
+                                    <option value="محل تجاري">محل تجاري</option>
+                                    <option value="مكتب إداري">مكتب إداري</option>
+                                    <option value="أرض">أرض</option>
+                                    <option value="مشروع استثماري">مشروع استثماري</option>
+                                </select>
+                                <select id="cityFilter" class="form-control">
+                                    <option value="">جميع المدن</option>
+                                    <option value="القاهرة">القاهرة</option>
+                                    <option value="الجيزة">الجيزة</option>
+                                    <option value="الإسكندرية">الإسكندرية</option>
+                                    <option value="القاهرة الجديدة">القاهرة الجديدة</option>
+                                    <option value="6 أكتوبر">6 أكتوبر</option>
+                                </select>
+                                <select id="statusFilter" class="form-control">
+                                    <option value="">جميع الحالات</option>
+                                    <option value="متاح">متاح</option>
+                                    <option value="محجوز">محجوز</option>
+                                    <option value="مباع">مباع</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Properties List -->
+                        <div class="properties-container" id="propertiesContainer">
+                            <div class="properties-placeholder">
+                                <i class="fas fa-home"></i>
+                                <p>لا توجد عقارات بعد</p>
+                                <button class="btn btn-primary" onclick="document.getElementById('addPropertyBtn').click()">
+                                    <i class="fas fa-plus"></i>
+                                    إضافة أول عقار
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Properties Stats -->
+                        <div class="properties-stats" id="propertiesStats">
+                            <div class="stat-item">
+                                <span class="stat-label">إجمالي العقارات:</span>
+                                <span class="stat-value" id="totalProperties">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">متاح:</span>
+                                <span class="stat-value" id="availableProperties">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">محجوز:</span>
+                                <span class="stat-value" id="reservedProperties">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">مباع:</span>
+                                <span class="stat-value" id="soldProperties">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">إجمالي المشاهدات:</span>
+                                <span class="stat-value" id="totalViews">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">إجمالي الاستفسارات:</span>
+                                <span class="stat-value" id="totalInquiries">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Tab -->
+            <div class="tab-content" id="appointments">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-calendar-alt"></i> إدارة المواعيد</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-outline" id="refreshAppointments">
+                                <i class="fas fa-sync-alt"></i>
+                                تحديث
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Appointments Filter -->
+                        <div class="filter-section">
+                            <select id="appointmentStatusFilter" class="form-control">
+                                <option value="">جميع المواعيد</option>
+                                <option value="مجدول">مجدول</option>
+                                <option value="مؤكد">مؤكد</option>
+                                <option value="ملغي">ملغي</option>
+                                <option value="مكتمل">مكتمل</option>
+                            </select>
+                            <input type="date" id="appointmentDateFilter" class="form-control">
+                        </div>
+                        
+                        <!-- Appointments List -->
+                        <div class="appointments-container" id="appointmentsContainer">
+                            <div class="appointments-placeholder">
+                                <i class="fas fa-calendar-times"></i>
+                                <p>لا توجد مواعيد بعد</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Inquiries Section -->
+                        <div class="inquiries-section">
+                            <h3><i class="fas fa-question-circle"></i> الاستفسارات الأخيرة</h3>
+                            <div class="inquiries-container" id="inquiriesContainer">
+                                <div class="inquiries-placeholder">
+                                    <i class="fas fa-inbox"></i>
+                                    <p>لا توجد استفسارات بعد</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settings">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-robot"></i> إعدادات الذكاء الاصطناعي</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="aiSettingsForm">
+                            <div class="form-group">
+                                <label for="aiEnabled">
+                                    <input type="checkbox" id="aiEnabled">
+                                    تفعيل الذكاء الاصطناعي
+                                </label>
+                            </div>
+                            
+                            <div class="ai-settings" id="aiSettings" style="display: none;">
+                                <div class="form-group">
+                                    <label for="geminiModel">نموذج Gemini:</label>
+                                    <select id="geminiModel" class="form-control" disabled>
+                                        <option value="gemini-pro" selected>Gemini Pro (ثابت)</option>
+                                    </select>
+                                    <small class="help-text">النموذج ثابت في النظام</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="geminiApiKey">مفتاح API الخاص بـ Gemini:</label>
+                                    <div class="input-group">
+                                        <input type="password" id="geminiApiKey" class="form-control" value="AIzaSyAxLbkJYVDUv-8o0Wp9W0mb-zcjQE0IwvA" disabled>
+                                        <button type="button" class="btn btn-outline" id="toggleApiKey">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                    <small class="help-text">
+                                        مفتاح API ثابت في النظام - لا يمكن تغييره
+                                    </small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="aiPrompt">التعليمات الأساسية للذكاء الاصطناعي:</label>
+                                    <textarea id="aiPrompt" class="form-control" rows="4" placeholder="أدخل التعليمات التي تريد أن يتبعها الذكاء الاصطناعي...">أنت مساعد مبيعات ذكي ومتخصص في خدمة العملاء. مهمتك هي مساعدة العملاء في الاستفسار عن المنتجات وتقديم المعلومات حول البزنس. كن ودوداً ومفيداً واستخدم المعلومات المتاحة لديك عن البزنس والمنتجات للإجابة على الأسئلة. إذا سأل العميل عن منتج معين، قدم له تفاصيل شاملة تشمل السعر والمميزات والتوفر. إذا سأل عن معلومات البزنس مثل ساعات العمل أو طرق الدفع أو التوصيل، قدم له المعلومات الدقيقة.</textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save"></i>
+                                    حفظ الإعدادات
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div class="tab-content" id="reports">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-download"></i> التقارير والتحميلات</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Excel Statistics -->
+                        <div class="stats-section">
+                            <h3><i class="fas fa-chart-bar"></i> إحصائيات سريعة</h3>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-comments"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4 id="totalMessages">0</h4>
+                                        <p>إجمالي الرسائل</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-calendar-check"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4 id="totalMeetings">0</h4>
+                                        <p>طلبات الاجتماعات</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4 id="todayMessages">0</h4>
+                                        <p>رسائل اليوم</p>
+                                    </div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-hourglass-half"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4 id="pendingMeetings">0</h4>
+                                        <p>اجتماعات معلقة</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Download Buttons -->
+                        <div class="download-section">
+                            <h3><i class="fas fa-file-excel"></i> تحميل التقارير</h3>
+                            <div class="download-grid">
+                                <div class="download-card">
+                                    <div class="download-icon">
+                                        <i class="fas fa-comments"></i>
+                                    </div>
+                                    <div class="download-info">
+                                        <h4>رسائل الواتساب</h4>
+                                        <p>جميع الرسائل الواردة مع أرقام المرسلين وأسمائهم</p>
+                                        <button class="btn btn-success" id="downloadMessages">
+                                            <i class="fas fa-download"></i>
+                                            تحميل Excel
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="download-card">
+                                    <div class="download-icon">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                    <div class="download-info">
+                                        <h4>طلبات الاجتماعات</h4>
+                                        <p>جميع طلبات الاجتماعات والمواعيد من العملاء</p>
+                                        <button class="btn btn-success" id="downloadMeetings">
+                                            <i class="fas fa-download"></i>
+                                            تحميل Excel
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="download-card">
+                                    <div class="download-icon">
+                                        <i class="fas fa-handshake"></i>
+                                    </div>
+                                    <div class="download-info">
+                                        <h4>طلبات التواصل مع المبيعات</h4>
+                                        <p>جميع طلبات التواصل والاستفسارات التجارية</p>
+                                        <button class="btn btn-success" id="downloadSales">
+                                            <i class="fas fa-download"></i>
+                                            تحميل Excel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Login Section -->
+                        <div class="admin-section" id="adminSection">
+                            <h3><i class="fas fa-user-shield"></i> تسجيل دخول الأدمن</h3>
+                            <div class="admin-login" id="adminLogin">
+                                <div class="form-group">
+                                    <label for="adminUsername">اسم المستخدم:</label>
+                                    <input type="text" id="adminUsername" class="form-control" placeholder="admin">
+                                </div>
+                                <div class="form-group">
+                                    <label for="adminPassword">كلمة المرور:</label>
+                                    <input type="password" id="adminPassword" class="form-control" placeholder="••••••••">
+                                </div>
+                                <button class="btn btn-primary" id="adminLoginBtn">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    تسجيل الدخول
+                                </button>
+                            </div>
+                            <div class="admin-panel" id="adminPanel" style="display: none;">
+                                <div class="admin-info">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>مرحباً أدمن! يمكنك الآن الوصول لجميع التقارير</span>
+                                    <button class="btn btn-outline btn-sm" id="adminLogout">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        تسجيل الخروج
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logs Tab -->
+            <div class="tab-content" id="logs">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-list"></i> سجل الرسائل</h2>
+                        <button class="btn btn-outline btn-sm" id="clearLogs">
+                            <i class="fas fa-trash"></i>
+                            مسح السجل
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="logs-container" id="logsContainer">
+                            <div class="log-placeholder">
+                                <i class="fas fa-inbox"></i>
+                                <p>لا توجد رسائل بعد</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Property Modal -->
+    <div class="modal" id="propertyModal">
+        <div class="modal-content large-modal">
+            <div class="modal-header">
+                <h3 id="propertyModalTitle">إضافة عقار جديد</h3>
+                <button class="modal-close" id="closePropertyModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="propertyForm">
+                    <input type="hidden" id="propertyId">
+                    
+                    <!-- Basic Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-info-circle"></i> المعلومات الأساسية</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="propertyTitle">عنوان العقار:</label>
+                                <input type="text" id="propertyTitle" class="form-control" required placeholder="شقة 3 غرف في التجمع الخامس">
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyType">نوع العقار:</label>
+                                <select id="propertyType" class="form-control" required>
+                                    <option value="">اختر النوع</option>
+                                    <option value="شقة سكنية">شقة سكنية</option>
+                                    <option value="فيلا">فيلا</option>
+                                    <option value="محل تجاري">محل تجاري</option>
+                                    <option value="مكتب إداري">مكتب إداري</option>
+                                    <option value="أرض">أرض</option>
+                                    <option value="مشروع استثماري">مشروع استثماري</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="propertyDescription">وصف العقار:</label>
+                            <textarea id="propertyDescription" class="form-control" rows="3" placeholder="وصف تفصيلي للعقار ومميزاته"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Location Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-map-marker-alt"></i> معلومات الموقع</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="propertyCity">المدينة:</label>
+                                <input type="text" id="propertyCity" class="form-control" required placeholder="القاهرة الجديدة">
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyDistrict">المنطقة:</label>
+                                <input type="text" id="propertyDistrict" class="form-control" required placeholder="التجمع الخامس">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="propertyAddress">العنوان التفصيلي:</label>
+                            <input type="text" id="propertyAddress" class="form-control" required placeholder="كمبوند بالم هيلز - المرحلة الثانية">
+                        </div>
+                    </div>
+
+                    <!-- Property Details -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-home"></i> تفاصيل العقار</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="propertyArea">المساحة (م²):</label>
+                                <input type="number" id="propertyArea" class="form-control" min="1" required placeholder="150">
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyRooms">عدد الغرف:</label>
+                                <input type="number" id="propertyRooms" class="form-control" min="0" placeholder="3">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="propertyBathrooms">عدد الحمامات:</label>
+                                <input type="number" id="propertyBathrooms" class="form-control" min="0" placeholder="2">
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyFloor">الدور:</label>
+                                <input type="number" id="propertyFloor" class="form-control" min="0" placeholder="3">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="propertyTotalFloors">إجمالي الأدوار في المبنى:</label>
+                            <input type="number" id="propertyTotalFloors" class="form-control" min="1" placeholder="8">
+                        </div>
+                    </div>
+
+                    <!-- Price Information -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-money-bill-wave"></i> معلومات السعر</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="propertyPrice">السعر الإجمالي (ج.م):</label>
+                                <input type="number" id="propertyPrice" class="form-control" min="0" required placeholder="2500000">
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyPricePerMeter">السعر للمتر (ج.م):</label>
+                                <input type="number" id="propertyPricePerMeter" class="form-control" min="0" placeholder="16667">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Features -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-star"></i> مميزات العقار</h4>
+                        
+                        <div class="form-group">
+                            <label for="propertyFeatures">المميزات (كل مميزة في سطر منفصل):</label>
+                            <textarea id="propertyFeatures" class="form-control" rows="4" placeholder="تشطيب سوبر لوكس&#10;مطبخ مجهز&#10;تكييف مركزي&#10;حديقة خاصة"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="propertyAmenities">الخدمات والمرافق (كل خدمة في سطر منفصل):</label>
+                            <textarea id="propertyAmenities" class="form-control" rows="4" placeholder="حمام سباحة&#10;نادي رياضي&#10;منطقة ألعاب أطفال&#10;مول تجاري"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Payment Options -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-credit-card"></i> خيارات الدفع</h4>
+                        
+                        <div class="form-group">
+                            <label for="propertyPaymentOptions">طرق الدفع المتاحة (كل طريقة في سطر منفصل):</label>
+                            <textarea id="propertyPaymentOptions" class="form-control" rows="3" placeholder="نقداً&#10;تقسيط على 5 سنوات&#10;مقدم 30% والباقي أقساط"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Contact & Status -->
+                    <div class="form-section">
+                        <h4><i class="fas fa-cog"></i> معلومات إضافية</h4>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="propertyContactPerson">الشخص المسؤول:</label>
+                                <input type="text" id="propertyContactPerson" class="form-control" placeholder="أحمد حسن">
+                            </div>
+                            <div class="form-group">
+                                <label for="propertyStatus">حالة العقار:</label>
+                                <select id="propertyStatus" class="form-control" required>
+                                    <option value="متاح">متاح</option>
+                                    <option value="محجوز">محجوز</option>
+                                    <option value="مباع">مباع</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            حفظ العقار
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelProperty">
+                            <i class="fas fa-times"></i>
+                            إلغاء
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
